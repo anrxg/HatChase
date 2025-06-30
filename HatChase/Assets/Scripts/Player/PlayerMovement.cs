@@ -3,19 +3,28 @@ using UnityEngine;
 public class PlayerMovement : MonoBehaviour
 {
     private PlayerCR playerInput;
+    private Animator animator;
 
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
     private Transform mainCamera;
+
     [SerializeField] private float playerSpeed = 3.0f;
-    [SerializeField] private float jumpHeight = .5f;
+    private float originalSpeed;
+
+    [SerializeField] private float jumpHeight = 0.5f;
     [SerializeField] private float gravityValue = -9.81f;
+    [SerializeField] private float coyoteTime = 0.2f;
+    private float coyoteTimeCounter;
+
 
     void Awake()
     {
         playerInput = new PlayerCR();
         controller = GetComponent<CharacterController>();
+        animator = GetComponent<Animator>();
+        originalSpeed = playerSpeed;
     }
 
     void OnEnable()
@@ -29,23 +38,44 @@ public class PlayerMovement : MonoBehaviour
         playerInput.Disable();
     }
 
-    private void Start()
+    void Start()
     {
         mainCamera = Camera.main.transform;
     }
 
     void Update()
     {
-        groundedPlayer = controller.isGrounded;
-        if (groundedPlayer && playerVelocity.y < 0)
+        Movement();
+    }
+
+    public void Jump()
+    {
+        if (controller.isGrounded)
         {
-            playerVelocity.y = 0f;
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+        }
+    }
+
+    private void Movement()
+    {
+        groundedPlayer = controller.isGrounded;
+
+        if (groundedPlayer)
+        {
+            coyoteTimeCounter = coyoteTime; // reset coyote timer if grounded
+        }
+        else
+        {
+            coyoteTimeCounter -= Time.deltaTime; // count down otherwise
         }
 
         Vector2 moveInput = playerInput.Player.Move.ReadValue<Vector2>();
         Vector3 move = (mainCamera.forward * moveInput.y + mainCamera.right * moveInput.x);
         move.y = 0f;
-        move = Vector3.ClampMagnitude(move, 1f); // prevents faster diagonal movement
+        move = Vector3.ClampMagnitude(move, 1f);
+
+        // Animation
+        animator.SetBool("isRunning", move.magnitude > 0.1f);
 
         if (move != Vector3.zero)
         {
@@ -55,21 +85,28 @@ public class PlayerMovement : MonoBehaviour
         // Apply gravity
         playerVelocity.y += gravityValue * Time.deltaTime;
 
-        // Combine horizontal and vertical movement
+        // Final movement
         Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
         controller.Move(finalMove * Time.deltaTime);
+    }
 
-        if (moveInput != Vector2.zero)
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.gameObject.CompareTag("Bullet"))
         {
-
+            Destroy(hit.gameObject);
+            SlowDownTemporarily();
         }
     }
 
-    public void Jump()
+    private void SlowDownTemporarily()
     {
-        if (controller.isGrounded)
-        {
-            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
-        }
+        playerSpeed = originalSpeed / 2f;
+        Invoke(nameof(RestoreSpeed), 2f);
+    }
+
+    private void RestoreSpeed()
+    {
+        playerSpeed = originalSpeed;
     }
 }

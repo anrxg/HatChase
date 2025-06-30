@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &232892852216755072
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4268120723446722448}
+  m_Layer: 0
+  m_Name: FIrePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &4268120723446722448
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 232892852216755072}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0.19627392, y: -0.0022836034, z: -0.9721057, w: 0.12838197}
+  m_LocalPosition: {x: 0.501, y: 0.02, z: -0.232}
+  m_LocalScale: {x: 1000.01306, y: 1000.0125, z: 1000.0129}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1639320381986246653}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &323107589065505538
 GameObject:
   m_ObjectHideFlags: 0
@@ -88,7 +119,7 @@ Transform:
   m_GameObject: {fileID: 374192635746041777}
   serializedVersion: 2
   m_LocalRotation: {x: 0.0000000013642589, y: 0.000000085493596, z: -0.000000006366544, w: 1}
-  m_LocalPosition: {x: -0.26347268, y: -0.0000002670288, z: 0.8795616}
+  m_LocalPosition: {x: -0.26, y: -0, z: -0.01}
   m_LocalScale: {x: 0.0009999871, y: 0.000999987, z: 0.0009999872}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1107,7 +1138,7 @@ Transform:
   m_GameObject: {fileID: 3236883583561468897}
   serializedVersion: 2
   m_LocalRotation: {x: -0.49999967, y: 0.4999999, z: -0.50000036, w: 0.50000006}
-  m_LocalPosition: {x: -0.020898437, y: 0.053332135, z: -0.004453125}
+  m_LocalPosition: {x: 227, y: 818.6, z: -222}
   m_LocalScale: {x: 1000.01306, y: 1000.0125, z: 1000.0129}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2242,7 +2273,7 @@ GameObject:
   - component: {fileID: 5291513966342792850}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2304,13 +2335,13 @@ CharacterController:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Height: 1.66
+  m_Height: 1.37
   m_Radius: 0.28
   m_SlopeLimit: 45
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 0.79, z: 0}
+  m_Center: {x: 0, y: 0.81, z: 0}
 --- !u!114 &5291513966342792850
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2323,8 +2354,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de955f8b656040849b9670a1c5d9e45b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerSpeed: 2
-  jumpHeight: 1
+  playerSpeed: 3
+  jumpHeight: 0.5
   gravityValue: -9.81
 --- !u!1 &8253417771930179640
 GameObject:
@@ -2452,7 +2483,8 @@ Transform:
   m_LocalPosition: {x: -0.010876083, y: 0.38235983, z: -0.11518041}
   m_LocalScale: {x: 1.0000001, y: 0.9999996, z: 0.99999976}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 4268120723446722448}
   m_Father: {fileID: 6321149655232133916}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &8349553336837208593
