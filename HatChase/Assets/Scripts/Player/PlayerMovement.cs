@@ -2,53 +2,74 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    InputManager inputManager;
-    float movementSpeed = 3f;
-    float rotationSpeed = 10f;
-    Vector3 moveDirection;
-    public Transform camTransform;
-    Rigidbody playerRb;
+    private PlayerCR playerInput;
+
+    private CharacterController controller;
+    private Vector3 playerVelocity;
+    private bool groundedPlayer;
+    private Transform mainCamera;
+    [SerializeField] private float playerSpeed = 3.0f;
+    [SerializeField] private float jumpHeight = .5f;
+    [SerializeField] private float gravityValue = -9.81f;
 
     void Awake()
     {
-        inputManager = GetComponent<InputManager>();
-        playerRb = GetComponent<Rigidbody>();
-        camTransform = Camera.main.transform;
+        playerInput = new PlayerCR();
+        controller = GetComponent<CharacterController>();
     }
 
-    public void HandleAllMovements()
+    void OnEnable()
     {
-        HandleMovement();
-        HandleRotation();
+        playerInput.Player.Jump.performed += ctx => Jump();
+        playerInput.Enable();
     }
 
-    #region Movements
-
-    void HandleMovement()
+    void OnDisable()
     {
-        moveDirection = camTransform.forward * inputManager.verticalInput;
-        moveDirection += camTransform.right * inputManager.horizontalInput;
-        moveDirection.y = 0f; 
-        moveDirection.Normalize();
-        moveDirection *= movementSpeed;
-
-        playerRb.linearVelocity = moveDirection;
+        playerInput.Disable();
     }
 
-    void HandleRotation()
+    private void Start()
     {
-        Vector3 targetDirection = camTransform.forward * inputManager.verticalInput;
-        targetDirection += camTransform.right * inputManager.horizontalInput;
-        targetDirection.y = 0f;
-        targetDirection.Normalize();
+        mainCamera = Camera.main.transform;
+    }
 
-        if (targetDirection != Vector3.zero)
+    void Update()
+    {
+        groundedPlayer = controller.isGrounded;
+        if (groundedPlayer && playerVelocity.y < 0)
         {
-            Quaternion targetRotation = Quaternion.LookRotation(targetDirection);
-            Quaternion playerRotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
-            transform.rotation = playerRotation;
+            playerVelocity.y = 0f;
+        }
+
+        Vector2 moveInput = playerInput.Player.Move.ReadValue<Vector2>();
+        Vector3 move = (mainCamera.forward * moveInput.y + mainCamera.right * moveInput.x);
+        move.y = 0f;
+        move = Vector3.ClampMagnitude(move, 1f); // prevents faster diagonal movement
+
+        if (move != Vector3.zero)
+        {
+            transform.forward = move;
+        }
+
+        // Apply gravity
+        playerVelocity.y += gravityValue * Time.deltaTime;
+
+        // Combine horizontal and vertical movement
+        Vector3 finalMove = (move * playerSpeed) + (playerVelocity.y * Vector3.up);
+        controller.Move(finalMove * Time.deltaTime);
+
+        if (moveInput != Vector2.zero)
+        {
+
         }
     }
 
-    #endregion
+    public void Jump()
+    {
+        if (controller.isGrounded)
+        {
+            playerVelocity.y = Mathf.Sqrt(jumpHeight * -2.0f * gravityValue);
+        }
+    }
 }
