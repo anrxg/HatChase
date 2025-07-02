@@ -26,6 +26,8 @@ public class MenuManager : MonoBehaviour
     }
     public void OpenMenu(Menu menu)
     {
+        Debug.Log($"[MenuManager] Opening menu: {menu.menuName}");
+
         for (int i = 0; i < menus.Length; i++)
         {
             if (menus[i].isOpen)
@@ -33,9 +35,11 @@ public class MenuManager : MonoBehaviour
                 CloseMenu(menus[i]);
             }
         }
+
         menu.Open();
     }
-    
+
+
 
     public void CloseMenu(Menu menu)
     {
