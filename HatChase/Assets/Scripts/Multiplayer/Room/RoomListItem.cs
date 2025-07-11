@@ -5,7 +5,7 @@ using Photon.Realtime;
 public class RoomListItem : MonoBehaviour
 {
     [SerializeField] Text roomNameText;
-    RoomInfo roomInfo;
+    public RoomInfo roomInfo;
 
     public void SetUp(RoomInfo _roomInfo)
     {
