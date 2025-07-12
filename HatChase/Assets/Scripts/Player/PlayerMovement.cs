@@ -1,6 +1,7 @@
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement : MonoBehaviourPunCallbacks
 {
     private PlayerCR playerInput;
     private Animator animator;
@@ -8,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     private CharacterController controller;
     private Vector3 playerVelocity;
     private bool groundedPlayer;
-    private Transform mainCamera;
+   private Transform mainCamera;
 
     [SerializeField] private float playerSpeed = 3.0f;
     private float originalSpeed;
@@ -18,22 +19,22 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float coyoteTime = 0.2f;
     private float coyoteTimeCounter;
 
-
     void Awake()
     {
+        
         playerInput = new PlayerCR();
         controller = GetComponent<CharacterController>();
         animator = GetComponent<Animator>();
         originalSpeed = playerSpeed;
     }
 
-    void OnEnable()
+    protected new void OnEnable()
     {
         playerInput.Player.Jump.performed += ctx => Jump();
         playerInput.Enable();
     }
 
-    void OnDisable()
+    protected new void OnDisable()
     {
         playerInput.Disable();
     }

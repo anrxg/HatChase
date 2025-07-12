@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 232892852216755072}
   serializedVersion: 2
   m_LocalRotation: {x: -0.19627392, y: -0.0022836034, z: -0.9721057, w: 0.12838197}
-  m_LocalPosition: {x: 0.501, y: 0.02, z: -0.232}
+  m_LocalPosition: {x: 0.477, y: 0.013, z: -0.222}
   m_LocalScale: {x: 1000.01306, y: 1000.0125, z: 1000.0129}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2271,6 +2271,8 @@ GameObject:
   - component: {fileID: 9010045140540793286}
   - component: {fileID: 1889056205023608535}
   - component: {fileID: 5291513966342792850}
+  - component: {fileID: 1635927243401836467}
+  - component: {fileID: -7649459629943157089}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -2357,6 +2359,45 @@ MonoBehaviour:
   playerSpeed: 3
   jumpHeight: 0.5
   gravityValue: -9.81
+  coyoteTime: 0.2
+--- !u!114 &1635927243401836467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199776741730404999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a5070b7cc903824da19ad749480d5cf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bulletPrefab: {fileID: 4356752495513279811, guid: 33e80779bbf85dd43a9ce2dfa938284e, type: 3}
+  firePoint: {fileID: 4268120723446722448}
+  playerTransform: {fileID: 8827236878092177469}
+  playerAnimator: {fileID: 9010045140540793286}
+--- !u!114 &-7649459629943157089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8199776741730404999}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &8253417771930179640
 GameObject:
   m_ObjectHideFlags: 0
